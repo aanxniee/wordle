@@ -104,6 +104,7 @@ void toUpper(string &s) {
 }
 
 // generates a random 5 letter english word using Random Number API
+// accesses API info via a namespace in config.h
 string randomWord() {
     string word;
     CURL *hnd = curl_easy_init();
