@@ -38,19 +38,23 @@ int main () {
     vector<vector<int> > matches(MAX_GUESSES, vector<int>(WORD_LENGTH));
 
     string input;
+    bool win = false;
     int currentGuess = 0;
+    
     string word = randomWord();
     toUpper(word);
-    cout << word << endl;
-    while (currentGuess < MAX_GUESSES) {
-    
-        cout << "ENTER A GUESS (Q TO QUIT): ";
-        cin >> input;
-        toUpper(input);
+    cout << endl;
 
+    while (currentGuess < MAX_GUESSES) {
+        
+        do {
+            cout << "ENTER YOUR GUESS (Q TO QUIT): ";
+            cin >> input;
+            toUpper(input);
+        } while (input != "Q" && !isValid(input));
+        
         if (input == "Q") {
-            cout << endl;
-            cout << "THANK YOU FOR PLAYING!" << endl;
+            cout << "QUIT GAME" << endl;
             break;
         }
 
@@ -60,20 +64,25 @@ int main () {
         print(guesses, matches, currentGuess);
 
         if (allMatched(input, word)) {
+            cout << endl;
             cout << "YOU WIN!" << endl;
+            win = true;
             break;
         }
 
         currentGuess++;
     }
-    
+
+    if (!win) {
+        cout << endl;
+        cout << "GAME OVER! THE WORD WAS " << word << endl;
+    }
 }
 
 // ----------------------------------------------------------------
 
 bool isValid(string s) {
-    return (s.length() != 5 && s.find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") ==
-        std::string::npos);
+    return s.length() == WORD_LENGTH && s.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") == std::string::npos;;
 }
 
 void toUpper(string &s) {
