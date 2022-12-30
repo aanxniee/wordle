@@ -126,14 +126,14 @@ bool allMatched(string input, string word) {
 
 void print(vector<string>guesses, vector<vector<int> > matches, int currentGuess) {
     system("clear");
-    cout << " ---------------" << endl;
-    cout << "|  W O R D L E  |" << endl ;
-    cout << " ---------------" << endl << endl;
+    cout << "-----------------" << endl;
+    cout << "   W O R D L E  " << endl ;
+    cout << "-----------------" << endl << endl;
 
     for (int i = 0; i <= currentGuess && i < MAX_GUESSES; i++) {
 
-        string padding = " -";
-        string text = "|";
+        string padding = "--";
+        string text = " ";
 
         for (int j = 0; j < WORD_LENGTH; j++) {
             padding += "---";
