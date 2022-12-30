@@ -8,6 +8,11 @@
 using namespace std;
 
 const int WORD_LENGTH = 5;
+const int MAX_GUESSES = 6;
+const int NOT_MATCHED = 0;
+const int PARTIAL_MATCHED = 1;
+const int MATCHED = 2;
+
 
 // ----------------------------------------------------------------
 
@@ -27,19 +32,18 @@ void print(vector<string>tries, vector<vector<int> > macthes, int currentTry);
 // ----------------------------------------------------------------
 
 int main () {
-    int numTries = 6;
-    vector<string> tries(numTries);
-    vector<vector<int> > matches(numTries, vector<int>(WORD_LENGTH));
+    vector<string> guesses(MAX_GUESSES);
+    vector<vector<int> > matches(MAX_GUESSES, vector<int>(WORD_LENGTH));
 
     string input;
-    int currentTry = 0;
+    int currentGuess = 0;
     string word = randomWord();
     toUpper(word);
 
     cout << word << endl;
-    print(tries, matches, currentTry);
+    print(guesses, matches, currentGuess);
 
-    while (currentTry < numTries) {
+    while (currentGuess < MAX_GUESSES) {
         do {
             cout << "ENTER A GUESS (Q TO QUIT): ";
             cin >> input;
@@ -52,10 +56,10 @@ int main () {
             break;
         }
 
-        tries[currentTry] = input;
+        guesses[currentGuess] = input;
 
-        print(tries, matches, currentTry);
-        currentTry++;
+        print(guesses, matches, currentGuess);
+        currentGuess++;
     }
     
 }
@@ -91,7 +95,7 @@ string randomWord() {
     return word;
 }
 
-void print(vector<string>tries, vector<vector<int> > matches, int currentTry) {
+void print(vector<string>guesses, vector<vector<int> > matches, int currentGuess) {
     system("clear");
     cout << " ---------------" << endl;
     cout << "|  W O R D L E  |" << endl ;
