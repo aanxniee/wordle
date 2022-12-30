@@ -4,6 +4,7 @@
 #include <vector>
 #include <curl/curl.h>
 #include "config.h"
+
 using namespace std;
 
 const int WORD_LENGTH = 5;
@@ -18,11 +19,12 @@ static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *use
 
 // ----------------------------------------------------------------
 
-
 bool isValid(string s);
 void toUpper(string &s);
 string randomWord();
-void print();
+void print(vector<string>tries, vector<vector<int> > macthes, int currentTry);
+
+// ----------------------------------------------------------------
 
 int main () {
     int numTries = 6;
@@ -32,28 +34,36 @@ int main () {
     string input;
     int currentTry = 0;
     string word = randomWord();
+    toUpper(word);
 
     cout << word << endl;
+    print(tries, matches, currentTry);
 
     while (currentTry < numTries) {
         do {
-            cout << "Enter a guess (Q to quit): ";
+            cout << "ENTER A GUESS (Q TO QUIT): ";
             cin >> input;
             toUpper(input);
         } while (input != "Q" && !isValid(word));
 
         if (input == "Q") {
-            cout << "Thank you for playing!" << endl;
+            cout << endl;
+            cout << "THANK YOU FOR PLAYING!" << endl;
             break;
         }
 
+        tries[currentTry] = input;
+
+        print(tries, matches, currentTry);
         currentTry++;
     }
     
 }
 
+// ----------------------------------------------------------------
+
 bool isValid(string s) {
-    return (s.length() != 5 && s.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") ==
+    return (s.length() != 5 && s.find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") ==
         std::string::npos);
 }
 
@@ -79,4 +89,11 @@ string randomWord() {
     curl_easy_cleanup(hnd);
 
     return word;
+}
+
+void print(vector<string>tries, vector<vector<int> > matches, int currentTry) {
+    system("clear");
+    cout << " ---------------" << endl;
+    cout << "|  W O R D L E  |" << endl ;
+    cout << " ---------------" << endl << endl;
 }
